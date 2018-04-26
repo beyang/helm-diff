@@ -9,7 +9,7 @@ func New() *cobra.Command {
 		Short: "Show manifest differences",
 	}
 
-	chartCommand := newChartCommand()
+	chartCommand := newChartCommand2()
 	cmd.AddCommand(newVersionCmd(), chartCommand)
 	//Alias root command to chart subcommand
 	cmd.Args = chartCommand.Args

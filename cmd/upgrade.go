@@ -30,6 +30,24 @@ This can be used visualize what changes a helm upgrade will
 perform.
 `
 
+func newChartCommand2() *cobra.Command {
+	diff2 := diff2Cmd{}
+
+	cmd := &cobra.Command{
+		Args: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return diff2.run()
+		},
+	}
+
+	f := cmd.Flags()
+	f.StringVar(&diff2.path0, "source", "", "")
+	f.StringVar(&diff2.path1, "target", "", "")
+	return cmd
+}
+
 func newChartCommand() *cobra.Command {
 	diff := diffCmd{}
 
