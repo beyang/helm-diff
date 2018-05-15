@@ -45,6 +45,8 @@ func newChartCommand2() *cobra.Command {
 	f := cmd.Flags()
 	f.StringVar(&diff2.path0, "source", "", "")
 	f.StringVar(&diff2.path1, "target", "", "")
+	f.VarP(&diff2.valueFiles, "values", "f", "specify values in a YAML file (can specify multiple)")
+	f.StringArrayVar(&diff2.values, "set", []string{}, "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)")
 	return cmd
 }
 
