@@ -44,7 +44,7 @@ func (d *diff2Cmd) run() error {
 }
 
 func (d *diff2Cmd) generateChart(chartPath string) (map[string]*manifest.MappingResult, error) {
-	args := []string{"template", "."}
+	args := []string{"template", chartPath}
 	for _, vf := range d.valueFiles {
 		args = append(args, "-f", vf)
 	}
@@ -53,10 +53,11 @@ func (d *diff2Cmd) generateChart(chartPath string) (map[string]*manifest.Mapping
 	}
 
 	cmd := exec.Command("helm", args...)
-	cmd.Dir = chartPath
 	out, err := cmd.Output()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, string(err.(*exec.ExitError).Stderr))
+		if execErr, ok := err.(*exec.ExitError); ok {
+			fmt.Fprintln(os.Stderr, string(execErr.Stderr))
+		}
 		return nil, err
 	}
 	return manifest.Parse(string(out)), nil
